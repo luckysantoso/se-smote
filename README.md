@@ -4,7 +4,7 @@
 
 ### Latent-Space Oversampling for Long-Tailed Oil Palm Fruit Classification
 
-*A supervised autoencoder that learns class-separable latent features **before** oversampling — so synthetic samples land where they belong.*
+_A supervised autoencoder that learns class-separable latent features **before** oversampling — so synthetic samples land where they belong._
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
@@ -20,7 +20,7 @@
 
 > **Problem.** Oil palm plantations produce highly imbalanced fruit images — common ripeness classes vastly outnumber rare ones, and classifiers trained on this skew fail on the minority classes that matter for harvest scheduling.
 >
-> **Method.** We train a **Super-Encoder** — an autoencoder with an auxiliary **Separator** classifier — so that the latent space is both *reconstructable* and *class-separable*. Then we run SMOTE **inside that latent space**, not on pixels.
+> **Method.** We train a **Super-Encoder** — an autoencoder with an auxiliary **Separator** classifier — so that the latent space is both _reconstructable_ and _class-separable_. Then we run SMOTE **inside that latent space**, not on pixels.
 >
 > **Result.** At the most extreme imbalance (**IR = 100**), SE-SMOTE reaches **macro-F1 = 0.621**, vs. EOS 0.594, VAE-SMOTE 0.308, DeepSMOTE 0.275, and pixel-space SMOTE 0.276 — **more than doubling** the best autoencoder-based baselines and clearly leading the previous state-of-the-art (EOS) where imbalance matters most.
 
@@ -28,7 +28,7 @@
 
 ## Why This Matters
 
-Harvesting oil palm at the right ripeness stage is a multi-billion-dollar problem, yet the class distribution that a plantation camera actually *sees* is long-tailed — fully ripe fruits dominate, while the rare classes (immature, over-ripe, decayed) are the ones operators most want to flag. Off-the-shelf oversampling in pixel space produces unrealistic images; standard latent-space oversampling with unsupervised autoencoders produces entangled clusters. SE-SMOTE addresses both failure modes.
+Harvesting oil palm at the right ripeness stage is a multi-billion-dollar problem, yet the class distribution that a plantation camera actually _sees_ is long-tailed — fully ripe fruits dominate, while the rare classes (immature, over-ripe, decayed) are the ones operators most want to flag. Off-the-shelf oversampling in pixel space produces unrealistic images; standard latent-space oversampling with unsupervised autoencoders produces entangled clusters. SE-SMOTE addresses both failure modes.
 
 <p align="center">
   <img src="assets/sample_dataset.png" alt="Five oil palm fruit ripeness classes" width="720"/>
@@ -74,6 +74,7 @@ with `β = 1.0` (reconstruction) and `α = 0.1` (separability). The reconstructi
    $$z_{\text{new}} = z_i + \lambda\,(z_j - z_i),\quad \lambda \sim \mathcal{U}(0, 1)$$
 
    until every class is balanced.
+
 3. Train a standard classifier (SVM, KNN, Logistic Regression, XGBoost, Random Forest) on the balanced latent features.
 
 Because the latent space is already class-separable, the interpolated points stay inside the correct class manifold instead of drifting into the decision boundary.
@@ -88,15 +89,15 @@ Because the latent space is already class-separable, the interpolated points sta
 
 **Macro-averaged F1 — best classifier per cell, as reported in the paper:**
 
-| Method              | IR = 10 (mild)    | IR = 100 (extreme) |
-|---------------------|-------------------|--------------------|
-| SMOTE               | 0.484             | 0.276              |
-| DeepSMOTE           | 0.382             | 0.275              |
-| VAE-SMOTE           | 0.528             | 0.308              |
-| EOS                 | 0.816             | 0.594              |
-| **SE-SMOTE (ours)** | **0.863**         | **0.621**          |
+| Method              | IR = 10 (mild) | IR = 100 (extreme) |
+| ------------------- | -------------- | ------------------ |
+| SMOTE               | 0.484          | 0.276              |
+| DeepSMOTE           | 0.382          | 0.275              |
+| VAE-SMOTE           | 0.528          | 0.308              |
+| EOS                 | 0.816          | 0.594              |
+| **SE-SMOTE (ours)** | **0.863**      | **0.621**          |
 
-**The honest picture.** SE-SMOTE is the top method at **IR = 10** (by ~0.05 macro-F1 over EOS) and at **IR = 100** (by ~0.03 over EOS, and by more than 2× over every autoencoder-based baseline). At **IR = 30, 50, 70**, SE-SMOTE and EOS trade the top spot — EOS edges SE-SMOTE in the mid-range, and SE-SMOTE pulls ahead as imbalance becomes severe. The *where it matters most* regime — extreme imbalance — is where the supervised latent space pays off clearly.
+**The honest picture.** SE-SMOTE is the top method at **IR = 10** (by ~0.05 macro-F1 over EOS) and at **IR = 100** (by ~0.03 over EOS, and by more than 2× over every autoencoder-based baseline). At **IR = 30, 50, 70**, SE-SMOTE and EOS trade the top spot — EOS edges SE-SMOTE in the mid-range, and SE-SMOTE pulls ahead as imbalance becomes severe. The _where it matters most_ regime — extreme imbalance — is where the supervised latent space pays off clearly.
 
 See [`docs/RESULTS.md`](./docs/RESULTS.md) for the full 5-classifier × 5-IR grid straight from the paper's Table II.
 
@@ -198,21 +199,21 @@ Training runs for up to 200 epochs with early stopping (patience = 15). Wall-clo
 
 All knobs live in [`src/config.py`](./src/config.py). The defaults reproduce the paper's IR = 10 setting:
 
-| Parameter                | Value  | Notes                                   |
-|--------------------------|--------|-----------------------------------------|
-| `image_size`             | 64     | Square RGB input                        |
-| `latent_dim`             | 4096   | Shared latent size                      |
-| `epochs`                 | 200    | Max; early stop at patience = 15        |
-| `batch_size`             | 32     |                                         |
-| `learning_rate`          | 1e-4   | Adam                                    |
-| `weight_decay`           | 1e-5   |                                         |
-| `alpha_sep`              | 0.1    | Weight of `L_sep` (classification)      |
-| `beta_recon`             | 1.0    | Weight of `L_rec` (reconstruction)      |
-| `dropout_prob`           | 0.5    |                                         |
-| `l2_normalize_latent`    | True   | Normalises `z` before decoder/separator |
-| `imbalance_factor`       | 10.0   | Geometric long-tail factor              |
-| `tail_class_label`       | 2      | Class index treated as the tail         |
-| `test_size`              | 0.2    | Stratified train/val split              |
+| Parameter             | Value | Notes                                   |
+| --------------------- | ----- | --------------------------------------- |
+| `image_size`          | 64    | Square RGB input                        |
+| `latent_dim`          | 4096  | Shared latent size                      |
+| `epochs`              | 200   | Max; early stop at patience = 15        |
+| `batch_size`          | 32    |                                         |
+| `learning_rate`       | 1e-4  | Adam                                    |
+| `weight_decay`        | 1e-5  |                                         |
+| `alpha_sep`           | 0.1   | Weight of `L_sep` (classification)      |
+| `beta_recon`          | 1.0   | Weight of `L_rec` (reconstruction)      |
+| `dropout_prob`        | 0.5   |                                         |
+| `l2_normalize_latent` | True  | Normalises `z` before decoder/separator |
+| `imbalance_factor`    | 10.0  | Geometric long-tail factor              |
+| `tail_class_label`    | 2     | Class index treated as the tail         |
+| `test_size`           | 0.2   | Stratified train/val split              |
 
 ---
 
@@ -240,7 +241,7 @@ If you use this code or the method in your research, please cite:
 
 **IEEE format:**
 
-> L. Santoso, I. M. Kamal, D. A. Navastara, and M. M. I. Subakti, "SE-SMOTE: Latent-space oversampling for long-tailed oil palm fruit classification," in *Proc. 2025 15th Int. Conf. Inf. Commun. Technol. Syst. (ICTS)*, 2025.
+> L. Santoso, I. M. Kamal, D. A. Navastara, and M. M. I. Subakti, "SE-SMOTE: Latent-space oversampling for long-tailed oil palm fruit classification," in _Proc. 2025 15th Int. Conf. Inf. Commun. Technol. Syst. (ICTS)_, 2025.
 
 ---
 
@@ -263,6 +264,6 @@ Released under the [MIT License](./LICENSE). You are free to use, modify, and di
 
 <div align="center">
 
-*If SE-SMOTE helped your work, a star on the repo and a citation in your paper go a long way.*
+_If SE-SMOTE helped your work, a star on the repo and a citation in your paper go a long way._
 
 </div>
