@@ -16,6 +16,7 @@ authors:
     given-names: "Misbakhul Munir Irfan"
     affiliation: "Department of Informatics, Institut Teknologi Sepuluh Nopember, Surabaya, Indonesia"
 repository-code: "https://github.com/luckysantoso/se-smote"
+url: "https://ieeexplore.ieee.org/document/11369614"
 license: MIT
 preferred-citation:
   type: conference-paper
@@ -31,3 +32,4 @@ preferred-citation:
       given-names: "Misbakhul Munir Irfan"
   collection-title: "Proceedings of the 2025 15th International Conference on Information & Communication Technology and System (ICTS)"
   year: 2025
+  url: "https://ieeexplore.ieee.org/document/11369614"

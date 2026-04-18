@@ -10,7 +10,7 @@ _A supervised autoencoder that learns class-separable latent features **before**
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3%2B-F7931E?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Paper](https://img.shields.io/badge/Paper-IEEE%20ICTS%202025-00629B?logo=ieee&logoColor=white)](#citation)
+[![Paper](https://img.shields.io/badge/Paper-IEEE%20Xplore-00629B?logo=ieee&logoColor=white)](https://ieeexplore.ieee.org/document/11369614)
 
 </div>
 
@@ -228,6 +228,8 @@ All knobs live in [`src/config.py`](./src/config.py). The defaults reproduce the
 
 ## Citation
 
+**Published at IEEE Xplore:** https://ieeexplore.ieee.org/document/11369614
+
 If you use this code or the method in your research, please cite:
 
 ```bibtex
@@ -235,24 +237,20 @@ If you use this code or the method in your research, please cite:
   author    = {Santoso, Lucky and Kamal, Inam Mustafa and Navastara, Dini Adni and Subakti, Misbakhul Munir Irfan},
   booktitle = {Proc. 2025 15th International Conference on Information \& Communication Technology and System (ICTS)},
   title     = {{SE-SMOTE}: Latent-Space Oversampling for Long-Tailed Oil Palm Fruit Classification},
-  year      = {2025}
+  year      = {2025},
+  url       = {https://ieeexplore.ieee.org/document/11369614}
 }
 ```
 
 **IEEE format:**
 
-> L. Santoso, I. M. Kamal, D. A. Navastara, and M. M. I. Subakti, "SE-SMOTE: Latent-space oversampling for long-tailed oil palm fruit classification," in _Proc. 2025 15th Int. Conf. Inf. Commun. Technol. Syst. (ICTS)_, 2025.
+> L. Santoso, I. M. Kamal, D. A. Navastara, and M. M. I. Subakti, "SE-SMOTE: Latent-space oversampling for long-tailed oil palm fruit classification," in _Proc. 2025 15th Int. Conf. Inf. Commun. Technol. Syst. (ICTS)_, 2025. [Online]. Available: https://ieeexplore.ieee.org/document/11369614
 
 ---
 
 ## Authors
 
 All authors are with the Department of Informatics, **Institut Teknologi Sepuluh Nopember (ITS)**, Surabaya, Indonesia.
-
-- **Lucky Santoso** — first author, correspondence
-- **Inam Mustafa Kamal**
-- **Dini Adni Navastara**
-- **Misbakhul Munir Irfan Subakti**
 
 ---
 
