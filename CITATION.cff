@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use SE-SMOTE in your research, please cite the paper below."
+title: "SE-SMOTE: Latent-Space Oversampling for Long-Tailed Oil Palm Fruit Classification"
+type: software
+authors:
+  - family-names: "Santoso"
+    given-names: "Lucky"
+    affiliation: "Department of Informatics, Institut Teknologi Sepuluh Nopember, Surabaya, Indonesia"
+  - family-names: "Kamal"
+    given-names: "Inam Mustafa"
+    affiliation: "Department of Informatics, Institut Teknologi Sepuluh Nopember, Surabaya, Indonesia"
+  - family-names: "Navastara"
+    given-names: "Dini Adni"
+    affiliation: "Department of Informatics, Institut Teknologi Sepuluh Nopember, Surabaya, Indonesia"
+  - family-names: "Subakti"
+    given-names: "Misbakhul Munir Irfan"
+    affiliation: "Department of Informatics, Institut Teknologi Sepuluh Nopember, Surabaya, Indonesia"
+repository-code: "https://github.com/luckysantoso/se-smote"
+license: MIT
+preferred-citation:
+  type: conference-paper
+  title: "SE-SMOTE: Latent-Space Oversampling for Long-Tailed Oil Palm Fruit Classification"
+  authors:
+    - family-names: "Santoso"
+      given-names: "Lucky"
+    - family-names: "Kamal"
+      given-names: "Inam Mustafa"
+    - family-names: "Navastara"
+      given-names: "Dini Adni"
+    - family-names: "Subakti"
+      given-names: "Misbakhul Munir Irfan"
+  collection-title: "Proceedings of the 2025 15th International Conference on Information & Communication Technology and System (ICTS)"
+  year: 2025
